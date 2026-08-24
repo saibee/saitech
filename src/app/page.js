@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck, Layers, Users, Sparkles, Mail, Code2, ExternalLink } from "lucide-react";
 import { projects, blogPosts } from "@/lib/data";
+import portrait_img from "@/assets/saibal-biswas.jpg";
 
 export default function Home() {
   return (
@@ -53,7 +54,7 @@ export default function Home() {
             <div className="relative">
               <div className="rounded-[28px] border bg-background p-3 shadow-xl shadow-black/5">
                 <div className="rounded-[20px] overflow-hidden border bg-muted aspect-[4/3] relative">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Saibal portrait placeholder" className="h-full w-full object-cover" />
+                  <img src={portrait_img.src || portrait_img} alt="Saibal Biswas" className="h-full w-full object-cover" />
                   <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-background/90 backdrop-blur p-3 border flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium leading-none">Saibal Biswas</p>
