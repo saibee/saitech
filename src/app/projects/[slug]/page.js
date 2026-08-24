@@ -6,13 +6,15 @@ export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const p = projects.find((x) => x.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const p = projects.find((x) => x.slug === slug);
   return { title: p ? `${p.title} — Projects` : "Project" };
 }
 
-export default function ProjectDetail({ params }) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectDetail({ params }) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return <div className="mx-auto max-w-6xl px-5 py-20">Not found</div>;
 
   return (

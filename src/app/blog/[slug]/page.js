@@ -5,13 +5,15 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
 }
-export function generateMetadata({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   return { title: post ? `${post.title} — Blog` : "Blog" };
 }
 
-export default function BlogDetail({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export default async function BlogDetail({ params }) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return <div className="mx-auto max-w-3xl px-5 py-20">Not found</div>;
 
   return (
