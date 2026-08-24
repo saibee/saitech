@@ -18,7 +18,7 @@ function MockProfile() {
 
   useEffect(() => {
     const raw = localStorage.getItem("saitech.profile");
-    if (raw) try { setForm(JSON.parse(raw)); } catch {}
+    if (raw) try { setForm(JSON.parse(raw)); } catch { }
     const av = localStorage.getItem("saitech.avatar");
     if (av) setAvatar(av);
   }, []);
@@ -56,7 +56,7 @@ function MockProfile() {
         </div>
 
         <form onSubmit={handleSave} className="rounded-[24px] border bg-background p-6">
-          <h2 className="font-medium flex items-center gap-2"><User size={16}/> Edit profile</h2>
+          <h2 className="font-medium flex items-center gap-2"><User size={16} /> Edit profile</h2>
           <div className="mt-5 space-y-4">
             <div>
               <label className="text-xs text-muted-foreground">Full name</label>
@@ -70,7 +70,7 @@ function MockProfile() {
               <label className="text-xs text-muted-foreground">Bio</label>
               <textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={3} className="mt-1 w-full rounded-2xl border px-4 py-3 text-sm bg-background resize-none" />
             </div>
-            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium"><Save size={16}/> Save changes</button>
+            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium"><Save size={16} /> Save changes</button>
             {saved && <span className="ml-3 text-sm text-emerald-600">Saved ✓</span>}
           </div>
         </form>
@@ -121,20 +121,20 @@ export default function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 md:px-6 py-10">
-      <h1 className="text-3xl font-semibold tracking-tight">Profile</h1>
+      <h1 className="text-3xl font-semibold tracking-tight text-primary">Profile</h1>
       <p className="text-sm text-muted-foreground mt-1">Manage your avatar and info via Clerk.</p>
 
       <div className="mt-8 grid md:grid-cols-[320px_1fr] gap-6">
         <div className="rounded-[24px] border bg-background p-6 text-center">
           <img src={user.imageUrl} alt="avatar" className="h-28 w-28 rounded-full mx-auto object-cover border-4 border-muted" />
-          <p className="font-medium mt-4">{user.fullName || user.primaryEmailAddress?.emailAddress}</p>
-          <p className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1"><Mail size={12}/>{user.primaryEmailAddress?.emailAddress}</p>
-          <button onClick={() => clerk.openUserProfile()} className="mt-4 text-xs px-3 py-1.5 rounded-full border hover:bg-muted">Manage avatar in Clerk →</button>
-          <button onClick={() => clerk.signOut()} className="mt-3 mx-auto flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"><LogOut size={12}/> Sign out</button>
+          <p className="font-medium mt-4 text-primary">{user.fullName || user.primaryEmailAddress?.emailAddress}</p>
+          <p className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1"><Mail size={12} />{user.primaryEmailAddress?.emailAddress}</p>
+          <button onClick={() => clerk.openUserProfile()} className="mt-4 text-xs px-3 py-1.5 rounded-full border bg-primary text-background hover:bg-muted hover:text-foreground">Manage avatar in Clerk →</button>
+          <button onClick={() => clerk.signOut()} className="mt-3 mx-auto flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"><LogOut size={12} /> Sign out</button>
         </div>
 
         <form onSubmit={handleUpdate} className="rounded-[24px] border bg-background p-6">
-          <h2 className="font-medium">Edit info</h2>
+          <h2 className="font-medium text-primary">Edit info</h2>
           <div className="mt-4 grid grid-cols-2 gap-4">
             <div>
               <label className="text-xs text-muted-foreground">First name</label>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
               <input value={edit.lastName} onChange={(e) => setEdit({ ...edit, lastName: e.target.value })} className="mt-1 w-full rounded-full border px-4 py-3 text-sm bg-background" />
             </div>
           </div>
-          <button className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium"><Save size={16}/> Save</button>
+          <button className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-background text-sm font-medium"><Save size={16} /> Save</button>
           {saved && <span className="ml-3 text-sm">{saved}</span>}
           <p className="text-xs text-muted-foreground mt-4">Avatar & email management handled by Clerk UserButton / UserProfile for security.</p>
         </form>

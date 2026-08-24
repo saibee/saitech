@@ -66,8 +66,8 @@ export default function Navbar() {
           <span className="h-8 w-8 rounded-lg bg-foreground text-background grid place-items-center">
             <Sparkles size={16} />
           </span>
-          <span className="text-[15px]">saitech<span className="font-light">.studio</span></span>
-          <span className="hidden sm:inline text-xs font-normal text-muted-foreground ml-1 px-2 py-0.5 rounded-full border">25+ yrs</span>
+          <span className="text-[15px]">Saitech<span className="font-light text-primary">.Studio</span></span>
+
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -77,7 +77,7 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`px-3 py-1.5 rounded-full text-sm transition ${active ? "bg-foreground text-background" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+                className={`px-3 py-1.5 rounded-full text-sm transition ${active ? "bg-primary text-background" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
               >
                 {l.label}
               </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
           <button
             aria-label="Toggle theme"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="h-9 w-9 grid place-items-center rounded-full border bg-background hover:bg-muted transition"
+            className="h-9 w-9 grid place-items-center rounded-full border bg-primary text-background hover:text-foreground hover:bg-muted transition"
           >
             {!mounted ? <Sun size={16} /> : theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>

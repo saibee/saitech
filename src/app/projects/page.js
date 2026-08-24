@@ -12,7 +12,7 @@ export default function ProjectsPage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs tracking-widest text-muted-foreground">PROJECTS</p>
-          <h1 className="text-3xl font-semibold tracking-tight mt-2">Enterprise & Creative Works</h1>
+          <h1 className="text-3xl text-primary font-semibold tracking-tight mt-2">Enterprise & Creative Works</h1>
           <p className="text-sm text-muted-foreground mt-2">
             Click any project card to open full modal preview with high-res imagery & case details.
           </p>
@@ -33,27 +33,27 @@ export default function ProjectsPage() {
                   alt={p.title}
                   className="h-full w-full object-cover group-hover:scale-[1.04] transition duration-500"
                 />
-                <span className="absolute top-3 left-3 text-[11px] px-2.5 py-1 rounded-full bg-background/90 backdrop-blur border">
+                <span className="absolute top-3 left-3 text-[11px] px-2.5 py-1 rounded-full text-background bg-primary/90 backdrop-blur border">
                   {p.category}
                 </span>
-                <span className="absolute top-3 right-3 text-[11px] px-2 py-1 rounded-full bg-foreground text-background">
+                <span className="absolute top-3 right-3 text-[11px] px-2 py-1 rounded-full bg-primary text-background">
                   {p.year}
                 </span>
               </div>
               <div className="p-4">
-                <h3 className="font-medium leading-tight group-hover:underline underline-offset-4">{p.title}</h3>
+                <h3 className="font-medium leading-tight group-hover:underline underline-offset-4 text-primary">{p.title}</h3>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{p.excerpt}</p>
               </div>
             </div>
             <div className="p-4 pt-0">
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {p.stack.slice(0, 3).map((s) => (
-                  <span key={s} className="text-[11px] px-2 py-1 rounded-full border bg-muted/50">{s}</span>
+                  <span key={s} className="text-[11px] px-2 py-1 rounded-full border bg-primary text-background">{s}</span>
                 ))}
               </div>
               <div className="mt-4 flex items-center justify-between text-xs font-medium pt-3 border-t">
                 <span className="inline-flex items-center gap-1">Click to expand big image & details</span>
-                <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+                <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition text-primary" />
               </div>
             </div>
           </div>
