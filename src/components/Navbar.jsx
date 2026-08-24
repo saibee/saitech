@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { useEffect, useState } from "react";
 import { Moon, Sun, Menu, X, Sparkles } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 
 const links = [
   { href: "/", label: "Home" },
@@ -15,14 +15,49 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+function AuthButtons({ isMobile, setOpen }) {
+  const isClerkConfigured = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const clerkUser = isClerkConfigured ? useUser() : { isLoaded: true, isSignedIn: false };
+  const { isSignedIn } = clerkUser;
+
+  if (!isClerkConfigured) {
+    return (
+      <Link
+        href="/profile"
+        onClick={() => isMobile && setOpen(false)}
+        className={isMobile ? "flex-1 text-center py-2 rounded-full border text-sm" : "px-4 py-2 rounded-full border text-sm hover:bg-muted transition"}
+      >
+        Profile
+      </Link>
+    );
+  }
+
+  if (isSignedIn) {
+    return (
+      <div className="flex items-center gap-3">
+        <Link href="/profile" onClick={() => isMobile && setOpen(false)} className="text-sm hover:underline">
+          Profile
+        </Link>
+        <UserButton />
+      </div>
+    );
+  }
+
+  return (
+    <SignInButton mode="modal">
+      <button className={isMobile ? "flex-1 py-2 rounded-full bg-foreground text-background text-sm" : "px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition"}>
+        Sign in
+      </button>
+    </SignInButton>
+  );
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
-
-  const isClerkConfigured = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b">
@@ -60,23 +95,7 @@ export default function Navbar() {
           </button>
 
           <div className="hidden md:flex items-center">
-            {isClerkConfigured ? (
-              <>
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="px-4 py-2 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-90 transition">Sign in</button>
-                  </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                  <div className="flex items-center gap-3">
-                    <Link href="/profile" className="text-sm hover:underline">Profile</Link>
-                    <UserButton afterSignOutUrl="/" />
-                  </div>
-                </SignedIn>
-              </>
-            ) : (
-              <Link href="/profile" className="px-4 py-2 rounded-full border text-sm hover:bg-muted transition">Profile</Link>
-            )}
+            <AuthButtons isMobile={false} setOpen={setOpen} />
           </div>
 
           <button className="md:hidden h-9 w-9 grid place-items-center rounded-full border" onClick={() => setOpen(!open)} aria-label="Menu">
@@ -94,16 +113,7 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="pt-3 mt-2 border-t flex gap-2">
-              {isClerkConfigured ? (
-                <>
-                  <SignedOut>
-                    <SignInButton mode="modal"><button className="flex-1 py-2 rounded-full bg-foreground text-background text-sm">Sign in</button></SignInButton>
-                  </SignedOut>
-                  <SignedIn><Link href="/profile" onClick={()=>setOpen(false)} className="text-sm py-2">Profile</Link><UserButton /></SignedIn>
-                </>
-              ) : (
-                <Link href="/profile" onClick={()=>setOpen(false)} className="flex-1 text-center py-2 rounded-full border text-sm">Profile demo</Link>
-              )}
+              <AuthButtons isMobile={true} setOpen={setOpen} />
             </div>
           </nav>
         </div>
